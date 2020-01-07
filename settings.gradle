@@ -1,2 +1,2 @@
 include ':plugin', ':game'
-rootProject.name='heart-rate-plugin'
+rootProject.name='neuro-game'

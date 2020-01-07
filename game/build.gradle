@@ -1,17 +1,29 @@
-task downloadUnityJarResolver(type:Exec) {
+task downloadUnityJarResolver(type: Exec) {
+    doFirst {
+        mkdir buildDir
+    }
+
+    outputs.file("$buildDir/play-services-resolver-1.2.135.0.unitypackage")
+
     commandLine 'wget',
             'https://github.com/googlesamples/unity-jar-resolver/raw/7132ffc0ff4e53bfd5941994cea0b62fdb04a984/play-services-resolver-1.2.135.0.unitypackage',
             '-O', "$buildDir/play-services-resolver-1.2.135.0.unitypackage"
 }
 
-task enableUnityJarResolver(type:Exec) {
+task enableUnityJarResolver(type: Exec) {
     dependsOn downloadUnityJarResolver
 
-    commandLine './Unity',
-                    '-gvh_disable',
-                    '-importPackage',
-                    "$buildDir/play-services-resolver-1.2.135.0.unitypackage",
-                    '-projectPath', projectDir,
-                    '-exportPackage Assets HeartRatePlugin.unitypackage',
-                    '-quit'
+    commandLine '/home/andrey/Unity/Hub/Editor/2019.2.17f1/Editor/Unity',
+            '-gvh_disable',
+            '-importPackage',
+            "$buildDir/play-services-resolver-1.2.135.0.unitypackage",
+            '-projectPath', projectDir,
+            '-exportPackage Assets HeartRatePlugin.unitypackage',
+            '-quit'
+}
+
+task build(type: Exec) {
+    dependsOn ':plugin:publish'
+
+    commandLine 'echo', 'TODO: Unity build command'
 }
