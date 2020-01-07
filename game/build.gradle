@@ -1,0 +1,17 @@
+task downloadUnityJarResolver(type:Exec) {
+    commandLine 'wget',
+            'https://github.com/googlesamples/unity-jar-resolver/raw/7132ffc0ff4e53bfd5941994cea0b62fdb04a984/play-services-resolver-1.2.135.0.unitypackage',
+            '-O', "$buildDir/play-services-resolver-1.2.135.0.unitypackage"
+}
+
+task enableUnityJarResolver(type:Exec) {
+    dependsOn downloadUnityJarResolver
+
+    commandLine './Unity',
+                    '-gvh_disable',
+                    '-importPackage',
+                    "$buildDir/play-services-resolver-1.2.135.0.unitypackage",
+                    '-projectPath', projectDir,
+                    '-exportPackage Assets HeartRatePlugin.unitypackage',
+                    '-quit'
+}
