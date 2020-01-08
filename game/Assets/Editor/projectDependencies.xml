@@ -21,7 +21,7 @@
              Additional repositories can be added using the "repositories" element.
         -->
 
-        <androidPackage spec="com.github.kibotu:Heart-Rate-Ometer:1.3.2">
+        <androidPackage spec="com.github.qaltera:Heart-Rate-Ometer:3f92b4f740348259e9f46f55047eac270cd54786">
             <androidSdkPackageIds>
                 <androidSdkPackageId>Heart-Rate-Ometer</androidSdkPackageId>
             </androidSdkPackageIds>

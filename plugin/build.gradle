@@ -40,7 +40,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation 'com.github.kibotu:Heart-Rate-Ometer:1.3.2'
+    implementation 'com.github.qaltera:Heart-Rate-Ometer:3f92b4f740348259e9f46f55047eac270cd54786'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     implementation fileTree(include: ['*.jar'], excludes: ['classes.jar'], dir: 'libs')

@@ -10,10 +10,12 @@ public class Paddle : MonoBehaviour
     float height;
     string input;
     public bool isRight;
+    public Ball ball;
 
-    public void Init(bool isRightPaddle)
+    public void Init(bool isRightPaddle, Ball ball)
     {
-        isRight = isRightPaddle;
+        this.isRight = isRightPaddle;
+        this.ball = ball;
         Vector2 pos = Vector2.zero;
         if (isRightPaddle) {
             pos = new Vector2(GameManager.topRight.x, 0);
@@ -38,7 +40,35 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float move = Input.GetAxis(input) * Time.deltaTime * speed;
+        float move = Input.GetAxis(input);
+        Touch[] touches = Input.touches;
+        Vector2? fingerPosition;
+        if (touches.Length > 0) {
+            fingerPosition = Camera.main.ScreenToWorldPoint(touches[0].position);
+        } else {
+            fingerPosition = null;
+        }
+
+        if (isRight) {
+            if (fingerPosition.HasValue) {
+                if (fingerPosition.Value.y > transform.position.y) {
+                    move = 1;
+                } else if (fingerPosition.Value.y < transform.position.y) {
+                    move = -1;
+                } else {
+                    move = 0;
+                }
+            }
+        } else {
+            float ballPositionY = ball.transform.position.y;
+            if (transform.position.y > ballPositionY) {
+                move = -1;
+            } else if (transform.position.y < ballPositionY) {
+                move = 1;
+            } else {
+                move = 0;
+            }
+        }
 
         if (transform.position.y < GameManager.bottomLeft.y + height / 2 && move < 0) {
             move = 0;
@@ -48,6 +78,6 @@ public class Paddle : MonoBehaviour
             move = 0;
         }
 
-        transform.Translate(move * Vector2.up);
+        transform.Translate(move * Time.deltaTime * speed * Vector2.up);
     }
 }

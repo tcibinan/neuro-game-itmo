@@ -25,5 +25,22 @@ task enableUnityJarResolver(type: Exec) {
 task build(type: Exec) {
     dependsOn ':plugin:publish'
 
-    commandLine 'echo', 'TODO: Unity build command'
+    doFirst {
+        mkdir buildDir
+    }
+
+    commandLine '/home/andrey/Unity/Hub/Editor/2019.2.17f1/Editor/Unity',
+            '-batchmode',
+            '-projectPath', projectDir,
+            '-executeMethod', 'CommandBuild.BuildAndroid'
+            '-quit'
+}
+
+task install(type: Exec) {
+    dependsOn ':game:build'
+
+    commandLine '/home/andrey/Android/Sdk/platform-tools/adb',
+            '-s', '81HBBMT2287V',
+            'install',
+            '-r', "$buildDir/neuro-game.apk"
 }
