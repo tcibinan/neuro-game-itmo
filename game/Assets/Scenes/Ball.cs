@@ -78,19 +78,14 @@ public class Ball : MonoBehaviour
     public void AdjustSpeed(int heartRate) {
         int minHeartRate = 50;
         int maxHeartRate = 100;
-        int heartRateInterval = (maxHeartRate - minHeartRate) / 2;
-        int meanHeartRate = heartRateInterval + minHeartRate;
-        float heartRateCoef = 3 * (meanHeartRate - heartRate) / heartRateInterval;
-        speed = initialSpeed + initialSpeed * heartRateCoef;
-//        float desiredSpeed = initialSpeed + initialSpeed * heartRateCoef;
-//        float maxSpeedIncrease = 0.1f;
-//        if (desiredSpeed != speed) {
-//            float speedDifference = desiredSpeed - speed;
-//            if (speedDifference > 0) {
-//                speed += Math.Min(speedDifference, maxSpeedIncrease);
-//            } else {
-//                speed -= Math.Min(speedDifference, maxSpeedIncrease);
-//            }
-//        }
+        if (heartRate < minHeartRate) {
+            heartRate = minHeartRate;
+        } else if (heartRate > maxHeartRate) {
+            heartRate = maxHeartRate;
+        }
+        float heatRateRatio = 1.0F - ((float) heartRate - minHeartRate) / ((float) maxHeartRate - minHeartRate);
+        float minSpeed = 4.0F;
+        float maxSpeed = 14.0F;
+        speed = minSpeed + (maxSpeed - minSpeed) * heatRateRatio;
     }
 }
